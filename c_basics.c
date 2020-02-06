@@ -219,7 +219,7 @@
 
 
 #include <stdio.h>
-
+#include <stdlib.h>
 
 void pointers_testing_pass_by_value(int *data){
     *data=33;     
@@ -231,6 +231,30 @@ void pointers_testing_pass_by_value(int *data){
 void pointers_testing_pass_by_reference(int **data){            
     **data=55; 
     *data=NULL;     
+}
+
+void fun(int a) 
+{ 
+    printf("\nValue of a is %d\n", a); 
+}    
+
+void add(int a, int b) 
+{ 
+    printf("Addition is %d\n", a+b); 
+} 
+void subtract(int a, int b) 
+{ 
+    printf("Subtraction is %d\n", a-b); 
+} 
+void multiply(int a, int b) 
+{ 
+    printf("Multiplication is %d\n", a*b); 
+} 
+
+
+void wrapper(void (*fn_ptr)(int, int), int a, int b){
+    // fn_ptr(a,b);  /* correct */ 
+    (*fn_ptr)(a,b);     
 }
 
 
@@ -263,7 +287,110 @@ int main(){
 
     printf("\ndata value after  function call %p", data1);      
 
-    printf("\nTemp value after  function call%d ", temp1);             
+    printf("\nTemp value after  function call%d ", temp1); 
+
+
+
+    /* pointer to void 
+        pointer to void  is a generic pointer that can be used to represent 
+        any data type during compilation or run time. Note that pointer 
+        to void  is not a null pointer; it is pointing to generic data type(void)
+
+        Any reference to void pointer must cast the pointer to the correct type
+    */    
+    void* p;        
+    p=(int*)malloc(sizeof(int));
+    if(p){
+        *((int*)p)=5;    
+        printf("\nMemory allocated and it's value is %d", (*(int*)p));  
+    }             
+
+    void* p1;     
+    int i=10;     
+    p1=&i;     
+    printf("\nI contains the following value %d", (*(int*)p1));          
+
+
+    /**
+     * pointer to function
+     * The second tool that is required to create c generic code is pointer to function
+     * Functions in our program occupy memory. The name of the function is pointer constant 
+     * to its first byte of memory. 
+     * 
+     * Just as with all other pointer types, we can define pointers to function variables
+     * and store the address in them. To declarse pointer to function, e code it as if it
+     * were prototype definition, with the function pointer in parantheses. The parantheses are
+     * important; without them c intreprets the function return type as a pointer.
+    **/
+    /* fun_ptr is a pointer to function fun() */
+    void (*fun_ptr)(int)=&fun;   
+    /* The above line is equivalent of following two 
+        void (*fun_ptr)(int); 
+        fun_ptr = &fun;  
+    */
+    // Invoking fun() using fun_ptr 
+    (*fun_ptr)(10); 
+    fun_ptr(10);    
+    /* If we remove bracket, then the expression “void (*fun_ptr)(int)” becomes “void *fun_ptr(int)” which is 
+    declaration of a function that returns void pointer 
+    
+    1) Unlike normal pointers, a function pointer points to code, not data. Typically a function pointer 
+    stores the start of executable code.
+    2) Unlike normal pointers, we do not allocate de-allocate memory using function pointers.
+    3) A function’s name can also be used to get functions’ address. For example, in the below program, 
+    we have removed address operator ‘&’ in assignment. We have also changed function call by removing *, the program still works.
+    
+    */
+    void (*fun_ptr_1)(int)=fun;     
+    fun_ptr_1(20);   
+
+    void (*fun_ptr_2)(int);                    
+    fun_ptr_2=fun;    
+    fun_ptr_2(30);      
+
+    /* 4) Like normal pointers, we can have an array of function pointers.  
+    5) Function pointer can be used in place of switch case. For example, in below program, 
+    user is asked for a choice between 0 and 2 to do different tasks.
+    */
+    // void (*fun_ptr_arr[])(int,int)={add, subtract, multiply};    
+    void (*fun_ptr_arr[2])(int,int);         
+    for(int i=0;i<3;i++){
+        fun_ptr_arr[i]=add;    
+    }        
+    fun_ptr_arr[2](2,3); 
+    (*fun_ptr_arr[2])(3,3);      
+
+
+    /* 6) Like normal data pointers, a function pointer can be passed as an argument and can also be returned from a function. */
+    wrapper(add, 6,5);  
+    wrapper(subtract, 6,5);   
+    wrapper(multiply, 6,5);        
+
+
+
+
+
+    /**
+     * pass by value
+     * data value before function call 0x7ffdab2edce0
+    Temp value before function call22 
+    data value after  function call 0x7ffdab2edce0
+    Temp value after  function call33 
+
+    pass by reference
+    data value before function call 0x7ffdab2edce4
+    Temp value before function call44 
+    data value after  function call (nil)
+    Temp value after  function call55  
+    
+    pointer to void
+    Memory allocated and it's value is 5
+    I contains the following value 10
+
+    pointer to function
+    */            
+
+    
 
     return 0;        
 
