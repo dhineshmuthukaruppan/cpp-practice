@@ -46,7 +46,9 @@ int main(){
 
     int a[]={1,2,3,4,5,99999};
 
-
+    // int b[5]={12};    valid
+    // b={1,2,3};        invalid
+    // int b[];          invalid
 
     cout << a << endl;   /* 0x7ffcc4211c20 */
     cout << &a[0] << endl;  /* 0x7ffcc4211c20 */ 
