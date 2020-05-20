@@ -35,8 +35,7 @@ void push_to_stack(int stack[],int element,int pos){
 }    
 
 int* plusOne(int* A, int n1) {
-    
-    
+
     int *len1;     
     
     int stack[n1+1];   
@@ -48,13 +47,11 @@ int* plusOne(int* A, int n1) {
     int power=0;
     int k,leading_zeros_count=0, non_zero_numbers_started=0, pushed_count=0;                         
 
-
     for(k=0; k<n1+1; k++){
         stack[k]=0;     
     }    
     
     
-
 
     for(k=n1-1; k>=0; k--){
         sum+= *(A+k) * pow(10,power) ;   
@@ -65,12 +62,10 @@ int* plusOne(int* A, int n1) {
     
     printf("intermediate sum %d \n",sum);  // 130 
     
-
     while(sum!=0){     
         push_to_stack(stack,sum%10, pushed_count++);           
         sum=floor(sum/10); 
     }
-
 
     for(k=n1; k>=0; k--){    
         if(stack[k] != 0 ){     
@@ -91,7 +86,6 @@ int* plusOne(int* A, int n1) {
     }else{
         len1= (int *) malloc(sizeof(int) * pushed_count + 4);        
     }
-
     
     int *out=len1;      
     
@@ -115,13 +109,10 @@ int* plusOne(int* A, int n1) {
             
             out++;    
         }   
-
     }  
     
     *out=99999;    
     
-    
-
     return len1;     
 }
 
@@ -130,8 +121,6 @@ int* plusOne(int* A, int n1) {
 int main() {
     
     int a[2] = {5,6};          
-    
-
     
     int *len1=plusOne(a, 2);           
     
@@ -144,7 +133,6 @@ int main() {
     }      
     
     printf("\n");    
-    
     
     return 0; 
 }
