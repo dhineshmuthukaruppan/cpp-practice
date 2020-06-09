@@ -1,0 +1,43 @@
+Javascript 
+---------
+- Javascript always pass by value so changing the value of the variable never changes the underlying primitive (string or number). However, when a variable refers
+to an object which includes array, the value is the reference to the object. In pass by reference, Function is called by directly passing the reference/ addrss of the
+variable as the argument. Changing the argument inside the function affect the variable passed from outside the function. In Javascript arrays and object follows 
+pass by reference. 
+
+
+C++
+---
+- In c++ Primitives and objects are passed by value and arrays are passed by reference by default unless the function signature specifies otherwise.   
+
+
+Java
+----
+- Many programming languages allow passing parameters by reference or by value. In java, we can only pass parameters by value. This imposes some limits and 
+raises questions. 
+- Object references are passed by value
+    - All object references in java are passed by value. This means that a copy of the value will be passed to a method. But the trick is that passing a copy
+    of the value also changes the real value of the object. To understand why start with this example. 
+            
+            public class ObjectReferenceExample {
+
+                public static void main(String... doYourBest) {
+                        Simpson simpson = new Simpson();
+                        transformIntoHomer(simpson);
+                        System.out.println(simpson.name);
+                }
+
+                static void transformIntoHomer(Simpson simpson) {
+                        simpson.name = "Homer";
+                }
+
+            }
+
+            class Simpson {
+                String name;
+            }
+    - In this case, it will be Homer! The reason is that Java object variables are simply references that point to real objects in the memory heap. 
+    Therefore, even though Java passes parameters to methods by value, if the variable points to an object reference, the real object will also be changed.
+
+- All primitive types are passed by value
+
