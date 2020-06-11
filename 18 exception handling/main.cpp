@@ -138,6 +138,111 @@
 
 
 
+/* 5) stack unwinding and how it works 
+
+    - if an exception is thrown but not caught in the current scope
+        c++ tries to find a handler for the exception by unwinding the stack
+    
+    - function in which the exception was not caught terminate and is removed from the call stack
+    - if a try block was used to then catch blocks are checked for a match
+    - if no try block was used or the catch handler doesn't match stack unwinding occurs again
+    - if the stack is unwound back to main and no catch handler handles the exception the program terminates
+
+
+*/
+
+
+
+/* 6) creating user defined exception classes 
+
+    user defined exceptions
+    - we can create exception classes and throw instances of those classes
+
+    best practice:
+    - throw an object not a primitive type
+    - throw an object by value
+    - catch an object by reference (or const reference)
+
+    class DivideByZeroException {
+
+    };
+
+    class NegativeValueException{
+
+    };   
+
+    double calculate_mpg(int miles, int gallons){
+        if(gallons == 0){
+            throw DivideByZeroException();     
+        }
+        return static_cast<double>(miles) / gallons; 
+    }    
+
+    try{
+        miles_per_gallon = calculate_mpg(miles, gallon); 
+    }catch(const DivideByZeroException &ex){
+        cerr << "you can't divide by zero";    
+    }
+
+*/
+
+
+/* 7) class level exception  
+
+    - exceptions can also be thrown from  with in a class
+    - method 
+        - these work the same way as they do for functions as we've seen
+
+    - constructor
+        - constructor may fail
+        - constructors do not return any value
+        - throw an exception in the constructor if you cannot initialize an object
+
+    - destructor
+        - do not throw exceptions from your destructor
+
+    Account::Account(std::string name, double balance)
+        :name{name}, balance{balance}{
+
+            if(balance < 0/0){
+                throw IllegalBalanceException {};
+            }
+    }
+
+    try{
+        std::unique_ptr<Account> moes_account = std::make_unique<Checking_Account>("Moe", -10.0); 
+    }catch(const IllegalBalanceException &ex){
+        cerr << "couldn't create account";
+    }
+
+*/
+
+
+
+/* 8) c++ std exceptions 
+
+
+    - c++ provides a class hierarchy of exception classes
+        - std::exception is the base class
+        - all subclasses implement the what() virtual function
+        - we can create our own user-defined exception subclasses
+
+        virtual const char *what() const noexcept;      
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 
