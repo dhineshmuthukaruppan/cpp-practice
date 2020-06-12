@@ -168,7 +168,141 @@
     int num {255};
 
     std::cout << std::showbase; << std::uppercase; 
-    
     std::cout << std::hex << num << endl;   // 0XFF = note the 0x prefix for hexadecimal
+
+    std::cout << std::showpos; // default - std::noshowpos
+    std::cout << num1; // +255
+
+
+
+*/
+
+
+
+/* 6) stream manipulators - floating point 
+
+    formatting floating point types
+    - default when displaying floating point values is:
+        - setprecision - number of digits displayed (6)
+        - fixed - not fixed to a specific number of digits after the decimal point
+        - noshowpoint - trailing zeroes are not displayed
+        - nouppercase - when displaying in scientific notation
+        - noshowpos - no + is displayed for positive numbers
+
+    - these manipulators affect all further output to the stream
+
+    // Section 19
+    // Stream manipulators - Floating point manipulators
+    // scientific, setprecision, fixed, showpoint, showpos, uppercase
+    #include <iostream>
+    #include <iomanip>
+
+    int main() {
+        double num1 {123456789.987654321};
+        double num2 {1234.5678};                     
+        double num3 {1234.0};                          
+    
+        //using default settings
+        std::cout << "--Defaults ----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	 // 1.23457e+008
+        std::cout << num2<< std::endl;	// 1234.57
+        std::cout << num3<< std::endl;	// 1234
+        
+        //Note how since we can't display in precision 2 scientific notation is used
+        std::cout << std::setprecision(2);
+        std::cout << "--Precision 2----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	 // 1.2e+008
+        std::cout << num2<< std::endl;	 // 1.2e+003
+        std::cout << num3<< std::endl;	 // 1.2e+003
+        
+        // Using precision 5
+        std::cout << std::setprecision(5);
+        std::cout << "--Precision 5----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	// 1.2345e+008
+        std::cout << num2<< std::endl;	// 1234.6
+        std::cout << num3<< std::endl;	//1234
+
+        // Using precision 9
+        std::cout << std::setprecision(9);
+        std::cout << "--Precision 9----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	// 123456790
+        std::cout << num2<< std::endl;	// 1234.568
+        std::cout << num3<< std::endl;	// 1234
+
+        // Using precision 3 and fixed
+        std::cout << std::setprecision(3) << std::fixed;
+        std::cout << "--Precision 3 - fixed ----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	// 123456789.988
+        std::cout << num2<< std::endl;	// 1234.568
+        std::cout << num3<< std::endl;	// 1234.000
+        
+        // Using precision  3, fixed and scientific notation
+        // Note precision is after the decimal
+        std::cout << std::setprecision(3)<< std::scientific;
+        std::cout << "--Precision 3 - scientific  ----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	
+        std::cout << num2<< std::endl;	
+        std::cout << num3<< std::endl;	
+        
+        // Same but display capital 'E' in scientific 
+        std::cout << std::setprecision(3) << std::scientific << std::uppercase;
+        std::cout << "--Precision 3 - scientific - uppercase  ----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	
+        std::cout << num2<< std::endl;	
+        std::cout << num3<< std::endl;	
+        
+        // Show '+' symbol for positive numbers
+        std::cout << std::setprecision(3) << std::fixed << std::showpos;
+        std::cout << "--Precision 3 - fixed - showpos ----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	
+        std::cout << num2<< std::endl;	
+        std::cout << num3<< std::endl;	
+        
+        
+        // Back to defaults
+        std::cout.unsetf(std::ios::scientific | std::ios::fixed);
+        std::cout << std::resetiosflags(std::ios::showpos);
+        
+        // Show trailing zeroes up to precision 10
+        
+        std::cout << std::setprecision(10) << std::showpoint;
+        std::cout << "-- precision 10 - showpoint ----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	
+        std::cout << num2<< std::endl;	
+        std::cout << num3<< std::endl;	
+
+    // Back to defaults
+        std::cout.unsetf(std::ios::scientific | std::ios::fixed);
+        std::cout << std::setprecision(6);
+        std::cout << std::resetiosflags(std::ios::showpos);
+        std::cout << std::resetiosflags(std::ios::showpoint);
+
+        std::cout << "--Back to defaults----------------------------" << std::endl;
+        std::cout << num1 << std::endl;	
+        std::cout << num2<< std::endl;	
+        std::cout << num3<< std::endl;	
+        
+        return 0;
+    }
+
+
+*/
+
+
+
+/* 7) stream manipulators align and fill 
+
+    - field width, align and fill
+
+    - default when displaying floating point values is
+        - setw - not set by default
+        - left - when no field width, right- when using field width
+        - fill - not set by default - blank space is used
+
+    - some of these manipulators affect only the next data element put on the stream
+
+    
+
+
 
 */
