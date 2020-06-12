@@ -21,8 +21,6 @@ class Person{
 
         virtual void putdata() = 0;
 
-        
-
 };
 
 class Professor : public Person{

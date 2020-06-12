@@ -179,7 +179,7 @@
     -----
         Mystring &Mystring::operator=(const Mystring &rhs){
             if(this == &rhs){  // p1 = p1
-                return *this;  // return current object
+                return *this;  // return current object and not its address
             }
 
             // deallocate storage for this->str since we are overwriting it
@@ -772,8 +772,6 @@
             }
         - if declared as a friend of Mystring can access private str attribute
         - otherwise must use getter methods
-
-        
 
 
 */
