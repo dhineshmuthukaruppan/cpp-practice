@@ -37,7 +37,6 @@ class LRUCache : public Cache{
     private: 
         int current_capacity;     
 
-    
     public:    
 
         LRUCache(int capacity){   
@@ -53,14 +52,7 @@ class LRUCache : public Cache{
 
         }   
 
-
 };
-
-
-
-
-
-
 
 
 

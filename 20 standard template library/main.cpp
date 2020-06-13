@@ -240,7 +240,344 @@
         - allows plugging-in any data type
         - compiler generates the appropriate class from the blueprint
 
+    - Generic programming with class templates
+        - but we'd like our Item class to be able to hold any type of data in addtion to the string
+        - we can't overload class names 
+        - we don't want to use dynamic polymorphism
 
+    // Section 20
+    // Class  templates
+    #include <iostream>
+    #include <string>
+    #include <vector>
+
+    // Template classes are typically completely contained in header files
+    // So, we would have the template class in Item.h and no Item.cpp file
+    // would be used
+    template <typename T>
+    class Item {
+    private:
+        std::string name;
+        T   value;
+    public:
+        Item(std::string name, T value) : name{name}, value{value} 
+        {}
+        std::string get_name() const {return name; }
+        T get_value() const { return value; }
+    };
+
+    template <typename T1, typename T2>
+    struct My_Pair {
+        T1 first;
+        T2 second;
+    };
+
+    int main() {
         
+        Item<int> item1 {"Frank", 100};
+        std::cout << item1.get_name() << " " << item1.get_value() << std::endl;
+        
+        Item  <std::string> item2 {"Frank", "Professor"};
+        std::cout << item2.get_name() << " " << item2.get_value() << std::endl;
+        
+        Item <Item<std::string>> item3 {"Frank",  {"C++", "Professor"}};
+        std::cout << item3.get_name() << " " 
+                        << item3.get_value().get_name() << " "
+                        << item3.get_value().get_value() << std::endl;
+        
+        std::cout << "\n================================" << std::endl;
+        std::vector<Item<double>> vec {};
+        vec.push_back (Item<double>("Larry", 100.0));
+        vec.push_back (Item<double>("Moe", 200.0));
+        vec.push_back (Item<double>("Curly",300.0));
+        
+        for (const auto &item: vec) {
+            std::cout << item.get_name() << " " << item.get_value() << std::endl;
+        }
+    
+        std::cout << "\n================================" << std::endl;
+        My_Pair <std::string, int> p1 {"Frank", 100};
+        My_Pair <int, double> p2 {124, 13.6};
+
+        std::cout << p1.first << ", " << p1.second << std::endl;
+        std::cout << p2.first << ", " << p2.second << std::endl;
+        
+        return 0;
+    }
 
 */
+
+
+/* 6) creating a generic array template class 
+
+    // Section 20
+    // Class template - Array
+
+    // Note: Since C++11 the STL has std::array which is a template-based array class
+    // Use std::array instead of raw arrays whenever possible
+
+    // Note that we can have non-type template parameters
+    // That's what N is in this case
+
+    #include <iostream>
+    #include <string>
+
+    template <typename T, int N>
+    class Array {
+        int size {N};           // how do we get the N???
+        T values[N];        // the N needs to ne known at compile-time!
+
+        friend std::ostream &operator<<(std::ostream &os, const Array<T, N> &arr) {
+            os << "[ ";
+            for (const auto &val: arr.values)
+                os << val << " ";
+            os << "]" << std::endl;
+            return os;
+        }
+    public:
+        Array() = default;
+        Array(T init_val) {
+            for (auto &item: values)
+                item = init_val;
+        }
+        void fill(T val) {
+            for (auto &item: values )
+                item = val;
+        }
+        int get_size() const {
+            return size;
+        }
+        // overloaded subscript operator for easy use
+        T &operator[](int index) {
+            return values[index];
+        }
+    };
+
+
+    int main() {
+        
+        Array<int, 5> nums;
+        std::cout << "The size of nums is: "<< nums.get_size() << std::endl;
+        std::cout << nums << std::endl;
+        
+        nums.fill(0);
+        std::cout << "The size of nums is: "<< nums.get_size() << std::endl;
+        std::cout << nums << std::endl;
+        
+        nums.fill(10);
+        std::cout << nums << std::endl;
+
+        nums[0] = 1000;
+        nums[3] = 2000;
+        std::cout << nums << std::endl;
+        
+        Array<int, 100> nums2 {1};
+        std::cout << "The size of nums2 is: "<< nums2.get_size() << std::endl;
+        std::cout << nums2 << std::endl;
+
+        Array<std::string, 10> strings(std::string{"Frank"});
+        std::cout << "The size of strings is: "<< strings.get_size() << std::endl;
+        std::cout << strings << std::endl;
+        
+        strings[0] = std::string{"Larry"}; // strings.operator[](0); 
+        std::cout << strings << std::endl;
+        
+        strings.fill(std::string{"X"});
+        std::cout << strings << std::endl;
+
+        
+        return 0;
+    }
+
+*/
+
+
+
+/* 7) introduction to stl containers 
+
+    containers
+    - data structures that can store object of almost any type
+        - template-based classes
+    
+    - each container has member functions
+        - some are specific to the container
+        - others are available to all containers
+    
+    - each containers has an associated header file
+        #include <container_type>
+
+
+    common methods provided by the stl container
+    --------------------------------------------
+    - default constructor - initializes an empty container
+    - overloaded constructors - initializes containers with many options
+    - copy constructors - initializes container as a copy of another container
+    - move constructor - moves existing container to new container
+    - destructor - destroys a container
+    - copy assignment (operator=) - copy one container to another
+    - move assignment (operator=) - move one container to another
+    - size - returns the number of elements in the container
+    - empty - returns boolean - is container empty?
+    - insert - insert an element into the container
+
+    - operator< and operator<=
+    - operator> and operator>= - returns boolean compare contents of 2 containers
+    - operator== and operator!= 
+    - swap - swap the elements of 2 containers
+    - erase - remove element(s) from a container
+    - clear - remove all elements from a container
+    - begin and end - returns iterators to first element or end
+    - rbegin and rend - returns reverse iterators to first element or end
+    - cbegin and cend - returns constant iterators to first element or end
+    - crbegin and crend - returns constant reverse iterators to first element or end
+
+*/
+
+
+/* 9) introduction to iterators 
+
+    *** iterator is not pointing to the real pointer
+
+    // Section 20
+    // Iterators
+    #include <iostream>
+    #include <vector>
+    #include <set>
+    #include <map>
+    #include <list>
+
+    // display any vector of integers using range-based for loop
+    void display(const std::vector<int> &vec) {
+        std::cout << "[ ";
+        for (auto const &i: vec) {
+            std::cout << i << " ";
+        }
+        std::cout << "]" << std::endl;
+    }
+
+    void test1() {
+        std::cout << "\n=============================" << std::endl;
+        std::vector<int> nums1 {1, 2, 3, 4, 5};
+        auto it = nums1.begin();            // point to 1
+        std::cout << *it << std::endl;
+
+        it++;                                           // point to 2
+        std::cout << *it << std::endl;      
+
+        it += 2;                                       // point to 4
+        std::cout << *it << std::endl;
+
+        it -= 2;                                        // point to 2
+        std::cout << *it << std::endl;
+
+        it = nums1.end() - 1;                   // point to 5
+        std::cout << *it << std::endl;
+    }
+
+    void test2() {
+        std::cout << "\n=============================" << std::endl;
+        // display all vector elements using an iterator
+        
+        std::vector<int> nums1 {1, 2, 3, 4, 5};
+
+        std::vector<int>::iterator it = nums1.begin();
+        while (it != nums1.end()) {
+            std::cout << *it << std::endl;
+            it++;
+        }
+        
+        // change all vector elements to 0
+        it = nums1.begin();
+        while (it != nums1.end()) {
+            *it = 0;
+            it++;
+        }
+
+        display(nums1);
+    }
+
+    void test3() {
+        
+        // using a const_iterator
+        std::cout << "\n=============================" << std::endl;
+        std::vector<int> nums1 {1, 2, 3, 4, 5};
+
+        std::vector<int>::const_iterator it1 = nums1.begin();
+        // auto it1 = nums1.cbegin();
+        
+        while (it1 != nums1.end()) {
+            std::cout << *it1 << std::endl;
+            it1++;
+        }
+        
+        // compiler error when we try to change element
+        it1 = nums1.begin();
+        while (it1 != nums1.end()) {
+        // *it1 = 0;   // Complier error - read only
+            it1++;
+        }
+
+    }
+
+    void test4() {
+        // more iterators
+        // using a reverse iterator
+        std::vector<int> vec {1,2,3,4};
+        auto it1  = vec.rbegin();       // reverse iterator over vector of ints starts at 4
+        while (it1 != vec.rend()) {
+            std::cout << *it1 << std::endl;
+            it1++;
+        }
+
+        // const reverse iterator over a list
+        std::list<std::string> name {"Larry", "Moe", "Curly"};
+        auto it2 =name.crbegin();    // iterator over list of strings  point to Curly
+        std::cout << *it2 << std::endl;
+        it2++;  // point to Moe
+        std::cout << *it2 << std::endl;
+
+        // iterator over a map
+        std::map<std::string, std::string> favorites {
+            {"Frank", "C++"},
+            {"Bill", "Java"},
+            {"James", "Haskell"}
+        };
+        auto it3 = favorites.begin();   // iterator over map of string, string pairs
+        while (it3 != favorites.end()) {
+            std::cout << it3->first << " : " << it3->second << std::endl;
+            it3++;
+        }
+    }
+
+    void test5() {
+        // iterate over a subset of a container
+        std::vector<int> vec {1,2,3,4,5,6,7,8,9,10};
+        auto start = vec.begin() + 2;
+        auto finish = vec.end() - 3;
+        
+        while (start != finish) {
+            std::cout << *start << std::endl;
+            start++;
+        }
+        
+    }
+    int main() {
+
+    //    test1();
+    //    test2();
+    //    test3();
+    //    test4();
+        test5();
+        return 0;
+    }
+
+*/
+
+
+
+
+
+
+
+
+
