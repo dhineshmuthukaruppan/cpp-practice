@@ -242,7 +242,7 @@ int main() {
 1628
 1498
 1162
-Segmentation fault (core dumped)
+
 
 500000 644
 get 3                       
@@ -278,50 +278,6 @@ set 12 287
 set 9 160
 get 16              1498
 get 17              1162
-
-                        - working perfectly in till here
-
-set 5 1524  +
-                - after inserting 5 
-                - missing element in linked list
-                7, 16, 19 
-
-                - breaks after this
-
-set 16 81   
-set 4 312
-set 9 89
-                - completely breaks after this    
-set 19 1306
-set 18 1041
-set 16 237
-get 8
-set 11 387
-get 1
-get 8
-set 7 1733
-set 1 1652
-get 17
-get 8
-set 20 1992
-set 5 1290
-set 13 270
-set 3 1236
-set 5 1441
-set 15 743
-set 19 165
-get 18
-get 17
-set 16 193
-set 14 1146
-get 1
-get 9
-set 9 831
-set 5 444
-set 3 302
-set 12 1973
-get 19
-
 
  */
 
