@@ -42,3 +42,17 @@ int main()
 https://en.cppreference.com/w/cpp/language/static_cast
  */
 
+
+/* preprocessors
+https://www.geeksforgeeks.org/cc-preprocessors/
+
+#include <iostream>
+#define toStr(x) #x
+using namespace std; 
+int main(){
+    cout << toStr(Result =)  << endl; 
+    return 0;   
+}
+
+ */
+
