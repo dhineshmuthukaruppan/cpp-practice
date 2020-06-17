@@ -1,4 +1,13 @@
 /* 
+https://www.geeksforgeeks.org/template-specialization-c/
+
+
+
+ */
+
+
+
+/* 
 MAPS
 =====
 int main()
@@ -73,3 +82,97 @@ int main(){
     // }
     return 0;        
 } */
+
+
+/* enumeration
+    https://www.geeksforgeeks.org/enum-classes-in-c-and-their-advantage-over-enum-datatype/
+
+    an enumerated type declares an optional type name and set of zero or more identifiers that
+    can be used as values of the type. each enumerator is a constant whose type is the enumeration
+    - to create an enumeration requires the use of the keyword enum. The general form of enumeration
+    type is 
+        enum enum-name {list of names } var-list; 
+
+    - here, the enum-name is the enumeration's type name. The list of names is comma separated
+    - for example the following code defines an enumeration of colors called colors and the variable
+        c of type color. finally c is assigned the value blue; 
+            enum color {red, gree, blue } c; 
+            c= blue; 
+    - by default, the value of the first name is 0, the second name has the value 1, the
+        third has the value 2, and so on. But you can give a name a specific value by adding
+        an initializer. For example, in the following enumeration, green will have value 5
+            enum color {red, green=5, blue}; 
+    - here blue will have a value of 6 because each name will be one greater than the one
+    that precedes it. 
+
+
+    #include <iostream>
+    using namespace std; 
+    enum week {sunday, monday, tuesday, wednesday..., saturday}; 
+
+    int main(){
+        week currentday; 
+        currentday = Wednesday; 
+        cout << currentday; // 3 
+        cout << currentday +1; // 4
+        return 0; 
+    }
+
+
+    C++11 has introduced enum classes (also called scoped enumerations), that makes enumerations 
+    both strongly typed and strongly scoped. Class enum doesn’t allow implicit conversion to int, 
+    and also doesn’t compare enumerators from different enumerations.
+    
+    // Declaration
+    enum class Color{ Red, Green, Blue};
+
+    // Initialisation
+    Color col = Color::Red;
+
+    // C++ program to demonstrate working 
+    // of Enum Classes 
+    #include <iostream> 
+    using namespace std; 
+    int main() 
+    { 
+        enum class Color { Red, 
+                        Green, 
+                        Blue }; 
+        enum class Color2 { Red, 
+                            Black, 
+                            White }; 
+        enum class People { Good, 
+                            Bad }; 
+        // An enum value can now be used 
+        // to create variables 
+        int Green = 10; 
+
+        // Instantiating the Enum Class 
+        Color x = Color::Green; 
+        // Comparison now is completely type-safe 
+        if (x == Color::Red) 
+            cout << "It's Red\n"; 
+        else
+            cout << "It's not Red\n"; 
+    
+        People p = People::Good; 
+    
+        if (p == People::Bad) 
+            cout << "Bad people\n"; 
+        else
+            cout << "Good people\n"; 
+    
+        // gives an error 
+        // if(x == p) 
+        // cout<<"red is equal to good"; 
+    
+        // won't work as there is no 
+        // implicit conversion to int 
+        // cout<< x; 
+    
+        cout << int(x); 
+    
+        return 0; 
+    } 
+*/
+
