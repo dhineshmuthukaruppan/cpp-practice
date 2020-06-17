@@ -18,7 +18,7 @@ private:
 
 // Enter your code here.
 // irst_name=<first_name>,last_name=<last_name> <some_string_value>
-ostream& operator<<(ostream &out, const Person &p){
+ostream& operator<<(ostream &out, const Person &p){  // we are not supposed to use const ostream &out
     out << "first_name="<< p.get_first_name() << ",last_name=" << p.get_last_name();
     return out;  
 }

@@ -56,3 +56,20 @@ int main(){
 
  */
 
+/* we can subtract characters in c++
+#include <iostream>
+using namespace std; 
+ostream& operator<<(ostream &out, const Person &p){  // we are not supposed to use const ostream &out
+    out << "first_name="<< p.get_first_name() << ",last_name=" << p.get_last_name();
+    return out;  
+}
+int main(){
+    int a = 'a' - '0';
+    cout << "value is " << a; 
+    // while(s[i]!='+')
+    // {
+    //     v1=v1*10+s[i]-'0';
+    //     i++;
+    // }
+    return 0;        
+} */
