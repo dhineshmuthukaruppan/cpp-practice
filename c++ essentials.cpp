@@ -1,7 +1,9 @@
 /* 
 https://www.geeksforgeeks.org/template-specialization-c/
 
+https://www.geeksforgeeks.org/count-distinct-elements-in-an-array/
 
+https://www.geeksforgeeks.org/initialize-a-vector-in-cpp-different-ways/
 
  */
 
@@ -30,6 +32,144 @@ int main()
     return 0;            
 } */
 
+
+/* function pointers  
+#include <iostream>
+#include <vector>
+
+using namespace std; 
+void helloworld(){ 
+    cout << "hello world \n"; 
+}
+void fun(int a){
+    cout << a << endl; 
+}
+void printValue(int value){
+    cout << "value" << value << endl; 
+}
+void ForEach(const vector<int> &values, void (*func)(int)){
+    for(int value : values)
+        func(value);   
+}
+int main(){
+
+    (*helloworld)();  // working
+    helloworld();    // working
+
+    auto function = helloworld; 
+    function();     // working
+    auto function1 = &helloworld; 
+    function1();    // working 
+
+    void (*function2)(); 
+    function2 = helloworld; 
+    function2();   // working
+    (*function2)(); // working
+
+    typedef void(*Helloworldfunction)(); 
+    Helloworldfunction function3 = helloworld; 
+    function3(); 
+    
+    typedef void(*Funfunction)(int);
+    Funfunction function4 = fun; 
+    function4(5);    
+
+    cout << "address of function2 pointer is " << &function2 << endl;  // 0x7ffe1c0f8308 
+    printf("address of function 2 pointer is %p \n", &function2);  // 0x7ffe1c0f8308 
+    printf("address of hello world function is %p \n", helloworld );  // 0x56309507aa0a
+    printf("address pointed to by function 2 is %p \n", function2);   // 0x56309507aa0a   
+
+
+    int a{4}; 
+    cout << "address of a :" << &a << endl;  
+
+    int *p {&a};   
+    cout << "address of a pointed by p : " << p << endl; 
+    cout << "address of p itself : " << &p << endl;     
+
+    vector<int> values {1, 5, 4};
+    ForEach(values, printValue);   
+
+    ForEach(values, [](int value){cout << value << endl; });      
+
+    return 0;   
+}
+
+*/
+
+/* lambdas in c++ 
+    
+    #include <iostream>
+    #include <vector>
+    #include <algorithm>
+    #include <functional>
+
+    void forEach(const std::vector<int> &values, const std::function<void(int)> &func){
+        for(int value: values){
+            func(value); 
+        }
+    }
+
+    int main(){
+
+        std::vector<int> values = {1, 5, 4, 2, 3}; 
+        auto it = std::find_if(values.begin(), values.end(), [](int value){return value > 3; }); 
+
+        std::cout << *it << std::endl; 
+
+        int a = 5; 
+        auto lambda = [=](int value){std::cout << "value: " << a << std::endl; }
+
+        ForEach(values, lambda); 
+    
+    
+    }   
+
+
+*/
+
+
+/*  const and pointers 
+
+    - there are several ways to qualify pointers using const
+        - pointer to constants
+        - constant pointers
+        - constant pointers to constants
+
+    pointers to constants
+    -----------------------
+    - the data pointed to by the pointer is constant and cannot be changed
+    - the pointer itself can change and point somewhere else
+
+        int highscore {100};
+        int lowscore {65};  
+        const int *scoreptr {&highscore};
+        *scoreptr = 86; // error
+        scoreptr = &lowscore; // ok
+
+    constant pointers
+    ------------------
+    - the data pointed to by the pointers can be changed
+    - the pointer itself cannot change and point somewhere else
+
+        int highscore {100}; 
+        int lowscore {65};
+        int *const scoreptr {&highscore};
+        *scoreptr = 86; // ok
+        scoreptr = &lowscore; // error
+
+    constant pointers to constants
+    -------------------------------
+    - the data pointed to by the pointer is constant and cannot be changed
+    - the pointer itself cannot change and point somewhere else
+
+        int highscore {100}; 
+        int lowscore {65};
+        const int *const scoreptr {&highscore};
+        *scoreptr = 86; // ok
+        scoreptr = &lowscore; // error
+
+*/
 
 
 
@@ -129,55 +269,6 @@ int main(){
     // Initialisation
     Color col = Color::Red;
 
-    // C++ program to demonstrate working 
-    // of Enum Classes 
-    #include <iostream> 
-    using namespace std; 
-    int main() 
-    { 
-        enum class Color { Red, 
-                        Green, 
-                        Blue }; 
-        enum class Color2 { Red, 
-                            Black, 
-                            White }; 
-        enum class People { Good, 
-                            Bad }; 
-        // An enum value can now be used 
-        // to create variables 
-        int Green = 10; 
-
-        // Instantiating the Enum Class 
-        Color x = Color::Green; 
-        // Comparison now is completely type-safe 
-        if (x == Color::Red) 
-            cout << "It's Red\n"; 
-        else
-            cout << "It's not Red\n"; 
-    
-        People p = People::Good; 
-    
-        if (p == People::Bad) 
-            cout << "Bad people\n"; 
-        else
-            cout << "Good people\n"; 
-    
-        // gives an error 
-        // if(x == p) 
-        // cout<<"red is equal to good"; 
-    
-        // won't work as there is no 
-        // implicit conversion to int 
-        // cout<< x; 
-    
-        cout << int(x); 
-    
-        return 0; 
-    } 
-*/
-
-
-
 
     // C++ program to demonstrate working 
     // of Enum Classes 
@@ -227,4 +318,55 @@ int main(){
     
         return 0; 
     } 
+
+*/
+
+
+
+/* namespaces in c++ 
+
+    namespace orange{
+        namespace functions{
+            void print(){
+                cout << "orange \n"; 
+            }
+        }
+
+        void print_again(){
+
+        }
+    }
+    // call like this - orange::functions::print(); 
+
+    namespace apple{
+        void print(){
+            cout << "apple \n"; 
+        }
+    }
+    int main(){
+        orange::print();  
+        using namespace apple; 
+        print(); 
+
+        using apple::print;
+        print(); 
+
+        namespace a = apple; 
+        a::print("Hello");   
+        
+        return 0; 
+    }
+*/
+
+
+
+/* function pointers in c++ 
+
+
+
+
+
+*/
+
+
 
